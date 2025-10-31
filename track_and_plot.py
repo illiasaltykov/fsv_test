@@ -99,13 +99,13 @@ def detect_and_track_cars(frame, model):
         A list of tuples: [(track_id, x, y), ...]
         where (x, y) is the bottom-center of the car's bounding box.
     """
-    # 1. Detect
+
     results = model(frame)
     df = results.pandas().xyxy[0]
-    # Class 2 is 'car' in the COCO dataset
+
     cars = df[(df['class'] == 2) & (df['confidence'] > 0.5)]
 
-    # 2. Track (Simplified)
+
     tracked_cars = []
     for i, row in cars.iterrows():
         x1, y1, x2, y2 = row['xmin'], row['ymin'], row['xmax'], row['ymax']
@@ -174,12 +174,12 @@ def project_pixel_to_gps(px, py, frame_pose, frame_width, frame_height):
 
 
 def main():
-    # 1. Parse SRT data
+    # Parse SRT data
     drone_data = parse_srt_file(SRT_FILE)
     if drone_data.empty:
         sys.exit("Exiting. Could not parse SRT file.")
 
-    # 2. Load ML Model
+    # Load ML Model
     # model = load_models()
     # if model is None:
     #     sys.exit("Exiting. Could not load ML model.")
@@ -187,7 +187,6 @@ def main():
     print("ML model loading is skipped.")
     print("Car detection will be faked to demonstrate the pipeline.")
 
-    # 3. Open Video
     cap = cv2.VideoCapture(VIDEO_FILE)
     if not cap.isOpened():
         sys.exit(f"Error: Could not open video file {VIDEO_FILE}")
@@ -240,7 +239,7 @@ def main():
     cap.release()
     print(f"Video processing complete. Found {len(car_paths)} (simulated) car paths.")
 
-    # 5. Plotting
+    # Plotting
     if not car_paths:
         print("No car paths were generated. Plotting drone path only.")
 
