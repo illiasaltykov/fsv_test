@@ -1,0 +1,8 @@
+opencv-python-headless
+numpy
+folium
+pysrt
+pandas
+torch
+torchvision
+scipy
